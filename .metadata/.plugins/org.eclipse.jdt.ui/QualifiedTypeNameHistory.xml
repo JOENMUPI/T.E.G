@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="ORG.RObj"/>
+<fullyQualifiedTypeName name="TEGApp.CS"/>
+<fullyQualifiedTypeName name="java.io.PrintWriter"/>
+<fullyQualifiedTypeName name="ORG.DB"/>
+<fullyQualifiedTypeName name="java.io.Serializable"/>
+<fullyQualifiedTypeName name="java.io.ObjectOutputStream"/>
+<fullyQualifiedTypeName name="java.io.ByteArrayOutputStream"/>
+<fullyQualifiedTypeName name="java.io.ByteArrayInputStream"/>
+<fullyQualifiedTypeName name="java.io.ObjectInputStream"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.security.MessageDigest"/>
+<fullyQualifiedTypeName name="java.security.NoSuchAlgorithmException"/>
+<fullyQualifiedTypeName name="java.math.BigInteger"/>
+<fullyQualifiedTypeName name="ORB.ClientOrb"/>
+<fullyQualifiedTypeName name="TEGApp.XD"/>
+<fullyQualifiedTypeName name="ORG.ProcessParams"/>
+<fullyQualifiedTypeName name="TEGApp.byt"/>
+<fullyQualifiedTypeName name="Utilities.ConnectionsMap"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="ORG.PropertiesMap"/>
+<fullyQualifiedTypeName name="ORG.PoolManager"/>
+<fullyQualifiedTypeName name="Utilities.DataSet"/>
+<fullyQualifiedTypeName name="Utilities.Serial"/>
+<fullyQualifiedTypeName name="Utilities.Row"/>
+<fullyQualifiedTypeName name="ORG.ProfileMap"/>
+<fullyQualifiedTypeName name="Utilities.ArgsParser"/>
+<fullyQualifiedTypeName name="Utilities.Props"/>
+<fullyQualifiedTypeName name="java.util.Calendar"/>
+<fullyQualifiedTypeName name="org.omg.CORBA.ORB"/>
+</qualifiedTypeNameHistroy>

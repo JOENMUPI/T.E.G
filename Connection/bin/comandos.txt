@@ -1,0 +1,10 @@
+Create
+
+cd C:\Users\jose mundo\.eclipse\T.E.G\Connection\src
+idlj -fall TEG.idl
+javac CliOrb/*.java TEGApp/*.java
+
+Execution
+
+cd C:\Users\jose mundo\.eclipse\T.E.G\Connection\src
+java CliOrb.ClientOrb -ORBInitialPort 1050 -ORBInitialHost  127.0.0.1

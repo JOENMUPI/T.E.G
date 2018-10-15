@@ -1,0 +1,48 @@
+package siva.security;
+
+import siva.database.DB;
+import siva.database.DataSet;
+import siva.utilities.Encrypt;
+
+public class SecurityManager {
+	
+	private String securityProps = "securityQueries";
+	
+	public boolean hasAuth(int profile, String object, String method) {
+		return ProfileMap.getInstance().getMethod(profile, object, method);
+	}
+	
+	public boolean authenticate(String username, String password) {
+		return new DB().query("checkUser", securityProps, username, Encrypt.getHash(password)).hasNext();
+	}
+	
+	public DataSet createUser(String username, String mail, String password) {
+		return new DB().doInsert("createUser", securityProps, username, mail, Encrypt.getHash(password));
+	}
+	
+	public boolean createUsers(Object[][] params) {
+		String[] queries = { "createUser", "createUserProfile" };
+		return new DB().transact(queries, securityProps, params);
+	}
+	
+	public Ticket getTicket(String username) {
+		DB db = new DB();
+		Ticket ticket = new Ticket();
+		DataSet ds = null;
+		try {
+			ds = db.query("getCredentials", "securityQueries", username);
+			while (ds.hasNext()) {
+				ticket.setProfile(ds.getField(1).asInteger());
+				ticket.setUser(ds.getField(0).asInteger());
+				ticket.setUsername(username);
+				ds.next();
+			}
+			System.out.println(ticket);
+			return ticket;
+		} finally {
+			ds = null;
+			System.gc();
+		}
+	}
+	
+}

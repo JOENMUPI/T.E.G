@@ -1,0 +1,19 @@
+// TODO FRONT
+
+    - Mejorar el GRID system
+        Margin utilities
+        Horizontal alignment, Alignment classes
+        Reordering 
+        Column breaks
+        Vertical alignment
+
+    - Responsive Components (media queries)    
+        Responsive classes (sm,md,lg,xl)
+
+    - Implementar al 100% log4javascript
+
+    - Emphasis classes (son los mensajes de errores, sucess, warning etc..)
+
+    - Hacer el UI single page, con su register y su login    
+
+    - Cambiar Componente TreeView a customElements y areglarle themes y css

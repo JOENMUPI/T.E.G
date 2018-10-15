@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+	<head>
+	  <title>Web Component</title>
+    <link href="assets/css/layout.css" rel="stylesheet" type="text/css">
+    <script src="core/requests.js"></script>
+    <script src="core/CCC.js"></script>
+    <script src="index.js"></script>
+	</head>
+	
+	<body>
+		<h1> START HTML CALLS</h1>
+		<siva-grid>
+			<siva-row>
+				<siva-form env='jungle' col='col-6'>
+					<siva-input env='jungle' placeholder='Jungle Input html'></siva-input>
+					<siva-button env='jungle'>Jungle</siva-button>
+				</siva-form>
+		
+				<siva-form env='default' col='col-6'>
+					<siva-input env='default' placeholder='default Input html'></siva-input>
+					<siva-button env='default'>Default</siva-button>
+				</siva-form>
+			</siva-row>
+		</siva-grid>
+		<siva-treeview env='jungle'>
+			<siva-treeview-row name='hola' id='lol'>
+				<siva-treeview-child>
+					<siva-treeview-row name='hola' id='xd'></siva-treeview-row>
+				</siva-treeview-child>
+			</siva-treeview-row>
+			<siva-treeview-row name='proof' id='xddd'></siva-treeview-row>
+		</siva-treeview>
+		<h1> END HTML CALLS</h1>
+		<hr>
+		<br>
+	</body>
+</html>

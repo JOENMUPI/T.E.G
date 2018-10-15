@@ -1,0 +1,18 @@
+package ORB;
+
+import TEGApp.*; 
+import org.omg.CosNaming.*;
+import org.omg.CORBA.*;
+
+public class ClientOrb {
+	static XtoC XtoCImpl;
+
+	
+	public XtoC getXtoCImpl() { return XtoCImpl; }
+	public void initXtoC(ORB o) {
+		try {
+			XtoCImpl = XtoCHelper.narrow(NamingContextExtHelper.narrow(o.resolve_initial_references("NameService")).resolve_str("XtoC"));
+		} 
+		catch (Exception e) { System.out.println("Error: " + e); e.printStackTrace(System.out); }
+	}
+}

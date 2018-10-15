@@ -1,0 +1,29 @@
+package LB;
+
+import java.util.Calendar;
+
+public class TicketTime {
+	private int[] h = new int[3], min = new int[3], seg = new int[3], mil = new int[3];
+	public double code;
+	
+	public void initialCaptureTime() { this.captureTime(1); createCode(); }
+	public void finalCaptureTime() { this.captureTime(2); }
+	private void createCode() { 
+		this.code = h[0] * Math.random() + min[0] * Math.random() + seg[0] * Math.random() + mil[0] * Math.random(); 
+	}
+	
+	private void captureTime(int i) {
+		this.h[i] =  Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+		this.min[i] =  Calendar.getInstance().get(Calendar.MINUTE);
+		this.seg[i] =  Calendar.getInstance().get(Calendar.SECOND);
+		this.mil[i] =  Calendar.getInstance().get(Calendar.MILLISECOND);
+	}
+	
+	public double getResult(){
+		this.h[2] = (this.h[1] - this.h[0]) * 3200;
+		this.min[2] = (this.min[1] - this.min[0]) * 60;
+		this.seg[2] = this.seg[1] - this.seg[0];
+		this.mil[2] = (this.mil[1] - this.mil[0]) / 1000;
+		return h[2] + min[2] + seg[2] + mil[2];
+	}
+}

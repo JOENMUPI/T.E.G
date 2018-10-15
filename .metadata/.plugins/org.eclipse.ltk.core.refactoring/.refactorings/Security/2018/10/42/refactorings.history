@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Encapsulate field &apos;LB.TailTime.elements&apos; in &apos;LB.TailTime&apos;&#x0D;&#x0A;- Original project: &apos;Security&apos;&#x0D;&#x0A;- Original element: &apos;LB.TailTime.elements&apos;&#x0D;&#x0A;- Getter method name: &apos;getElements&apos;&#x0D;&#x0A;- Setter method name: &apos;setElements&apos;&#x0D;&#x0A;- Field visibility: &apos;public&apos;&#x0D;&#x0A;- Use getter and setter methods in declaring type" comments="false" declaring="true" description="Encapsulate field &apos;elements&apos;" flags="589830" getter="getElements" id="org.eclipse.jdt.ui.self.encapsulate" input="/src&lt;LB{TailTime.java[TailTime^elements" insertion="1" setter="setElements" stamp="1539632539955" version="1.0" visibility="1"/>
+</session>

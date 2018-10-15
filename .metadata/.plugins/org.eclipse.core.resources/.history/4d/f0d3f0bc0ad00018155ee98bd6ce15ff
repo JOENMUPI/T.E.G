@@ -1,0 +1,12 @@
+package LB;
+
+public class TicketTime {
+	private int h,min,seg;
+	
+	public void setH(int h) { this.h = h; }
+	public void setMin(int min) { this.min = min; }
+	public void setSeg(int seg) { this.seg = seg; }
+	public int getH() { return h; }
+	public int getMin() { return min; }
+	public int getSeg() { return seg; }
+}

@@ -1,0 +1,8 @@
+package ORG;
+
+public class Snippet {
+	public HashMap<String, HashMap<String, Boolean>> getProfile(Integer profile) { return profiles.get(profile); }
+		
+		
+}
+

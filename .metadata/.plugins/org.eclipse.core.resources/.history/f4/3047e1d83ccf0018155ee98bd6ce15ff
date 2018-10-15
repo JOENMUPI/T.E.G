@@ -1,0 +1,28 @@
+package ORB;
+
+import TEGApp.*; 
+import org.omg.CosNaming.*;
+import org.omg.CORBA.*;
+
+public class ClientOrb {
+	public static XtoD XtoDImpl;
+	public static StoP StoPImpl;
+
+	public XtoD getXtoDImpl() { return XtoDImpl; }
+	public void initXtoD(ORB o) {
+		try {
+			XtoDImpl = XtoDHelper.narrow(NamingContextExtHelper.narrow(o.resolve_initial_references("NameService")).resolve_str("XtoD"));
+		}
+		
+		catch (Exception e) { System.out.println("Error: " + e); e.printStackTrace(System.out); }
+	}
+	
+	public StoP getStoPImpl() { return StoPImpl; }
+	public void initStoP(ORB o) {
+		try {
+			StoPImpl = StoPHelper.narrow(NamingContextExtHelper.narrow(o.resolve_initial_references("NameService")).resolve_str("StoP"));
+		} 
+		
+		catch (Exception e) { System.out.println("Error: " + e); e.printStackTrace(System.out); }
+	}
+}

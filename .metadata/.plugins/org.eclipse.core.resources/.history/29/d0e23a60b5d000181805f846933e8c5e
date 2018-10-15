@@ -1,0 +1,14 @@
+package LB;
+
+import java.util.ArrayList;
+
+public class TailTime {
+	private ArrayList<double[]> tt;
+	private int elements = 5;
+	public void setTime(double d) { if(this.checklong()) { this.tt.remove(0); } this.tt.add(d); }
+	public void setElements(int elements) { this.elements = elements; }
+	private Boolean checklong() {
+		if(this.tt.size() == this.elements) { return true; }
+		else { return false; }
+	}
+}

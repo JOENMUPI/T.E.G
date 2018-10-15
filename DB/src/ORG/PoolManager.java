@@ -1,0 +1,16 @@
+package ORG;
+
+import java.sql.Connection;
+import java.util.Properties;
+
+public class PoolManager{
+	private static Pool myPool = null;
+	
+	public static void InitializePool(Properties props) { myPool = new Pool(props); }
+	public static Connection getConnection() { return myPool.getConnection(); }
+	public static void returnConnection(Connection c) { myPool.returnConnection(c); }
+	public static int onlineConnections() { return myPool.getHowManyAreOnline(); }
+	public static int offlineConnections() { return myPool.getHowManyAreOffline(); }
+	public static int getInactiveUsers() { return myPool.getInactiveConnections(); }
+	public static int getActiveUsers() { return myPool.getActiveConnections(); }
+}
