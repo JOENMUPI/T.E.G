@@ -28,12 +28,12 @@ For more details, check the diagrams. There are plans for a LoadBalancer and a L
 
 Having talked about workflow, it should be easier to understand what's inside the IDL:
 
-- byt is a byte array that can be returned by functions.
-- baseS is the **base s**tructure for a request.
-- XC is the data transfered between any Object (AKA **X**) and **C**onnection.
-- PB is the data transfered between **P**rocess and any Business Object.
-- XD is the data transfered between any Object (AKA **X**) and **D**B.
-- baseI is the **base I**nterface for Objects.
+- **byt** is a **byt**e array that can be returned by functions.
+- **baseS** is the **base s**tructure for a request.
+- **XC** is the data transfered between any Object (AKA **X**) and **C**onnection.
+- **PB** is the data transfered between **P**rocess and any Business Object.
+- **XD** is the data transfered between any Object (AKA **X**) and **D**B.
+- **baseI** is the **base i**nterface for Objects.
 - PtoB, XtoD, and XtoC have similar purposes, to carry data between two Objects. E. g., **P**to**B** means "**P**rocess gets data from **B**usiness Object" (the "to" is confusing, we know).
 
 Nomenclature could be better, but this will do.
