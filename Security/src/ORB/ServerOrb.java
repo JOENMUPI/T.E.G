@@ -1,68 +1,51 @@
 package ORB;
+
 import TEGApp.*;
-import Utilities.ArgsParser;
+
 import Utilities.DataSet;
 import Utilities.Props;
 import Utilities.Row;
 import Utilities.Serial;
 
 import org.omg.CosNaming.*;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.security.SecureRandom;
+
 import org.omg.CORBA.*;
 import org.omg.PortableServer.*;
 import org.omg.PortableServer.POA;
 
+import LB.ConnectionsMap;
+import LB.LB;
 import ORG.ProfileMap;
-
-class CtoSImpl extends CtoSPOA {
-	private ORB orb;
-	
-	public void setORB(ORB orb_val) { orb = orb_val; }
-	public boolean test() { return true; }
-	public void shutdown() { orb.shutdown(false); }
-	public boolean senData(CS data) {
-		try { return ProfileMap.getPerm(data.profile, data.ObjectName, data.methodName);  }
-		finally {
-			if(ProfileMap.getPerm(data.profile, data.ObjectName, data.methodName)) {
-				SP sp = new SP();
-				sp.infoR = data.infoR;
-				sp.methodName = data.methodName;
-				sp.ObjectName = data.ObjectName;
-				sp.params = data.params;
-				sp.typeParams = data.typeParams;
-				ClientOrb.getStoPImpl(null).senData(sp);
-			}
-		}
-	}
-	
-	public void confirmation(String code) {	}
-}
 
 public class ServerOrb {
 	public static void main(String args[]) {
 		try {
+			Runtime.getRuntime().exec("cmd /C start /wait orbd -ORBInitialPort " + Props.getPropertiesFile("Connections", "Server").getProperty("port"));
 			start();
 			ORB orb = ORB.init(ArgsParser.serverInfo(Props.getPropertiesFile("Connections", "Server")), null); 
 			POA rootpoa = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
 			rootpoa.the_POAManager().activate();
-			CtoSImpl CtoSImpl = new CtoSImpl(); 
-			CtoSImpl.setORB(orb); 
+			SImpl SImpl = new SImpl(); 
+			SImpl.setORB(orb); 
 			NamingContextExt ncRef = NamingContextExtHelper.narrow(orb.resolve_initial_references("NameService"));
-			NameComponent path[] = ncRef.to_name("CtoS");
-			ncRef.rebind(path, CtoSHelper.narrow(rootpoa.servant_to_reference(CtoSImpl)));
-			System.out.println("ServidorOrb C.S listo y en espera");
+			NameComponent path[] = ncRef.to_name("S");
+			ncRef.rebind(path, SHelper.narrow(rootpoa.servant_to_reference(SImpl)));
+			System.out.println("ServidorOrb Security listo y en espera");
 			orb.run();
-		}
-		
-		catch (Exception e) { System.err.println("Error: " + e); e.printStackTrace(System.out); }
-		System.out.println("Adios, cerrando servidor C.S");
+		} catch (Exception e) { e.printStackTrace(System.out); }
+		System.out.println("Adios, cerrando servidor Security");
 	}
 	
 	private static void start() {
-		XD xd = new XD();
-		xd.params = null;
-		xd.schema = "security";
-		xd.queryId = "loadProfiles";
-		DataSet ds = Serial.deserializeDS(ClientOrb.getXtoDImpl(null).dataRequest(xd));//recuerda aqui va lo de lb
+		try {
+			ConnectionsMap.loadConnections(Serial.deserializeConnections(ClientOrb.getTImpl(ORB.init(ArgsParser.serverInfo(Props.getPropertiesFile("Connections", "Traker").getProperty("host"), Props.getPropertiesFile("Connections", "Traker").getProperty("port")), null)).getConnection("Security", InetAddress.getLocalHost().getHostAddress(), Props.getPropertiesFile("Connections", "Product").getProperty("port")).obj));
+		} catch (UnknownHostException e) { e.printStackTrace(); }
+		DataSet ds = Serial.deserializeDS(ClientOrb.getDImpl(LB.getOrb("DB")).dataRequest(new XD("" + new SecureRandom().nextLong(), "security", "loadProfiles", null)).obj);
+		
 		loadProfiles(ds);
 		ds.first();
 		loadObjects(ds);
@@ -76,6 +59,7 @@ public class ServerOrb {
 			ProfileMap.setProfile(r.getField("profile_ide").asInteger());
 		}
 	}
+	
 	private static void loadObjects(DataSet ds) {
 		while(ds.hasNext()) {
 			Row r = ds.next();
@@ -86,8 +70,7 @@ public class ServerOrb {
 	private static void loadMethods(DataSet ds) {
 		while(ds.hasNext()) {
 			Row r = ds.next();
-			ProfileMap.setMethod(r.getField("profile_ide").asInteger(), r.getField("object_nam").asString(), r.getField("object_nam").asString(), r.getField("perm").asBoolean());
+			ProfileMap.setMethod(r.getField("profile_ide").asInteger(), r.getField("object_nam").asString(), r.getField("method_nam").asString(), r.getField("perm").asBoolean());
 		}
-	}
-	
+	}	
 }

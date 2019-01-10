@@ -25,6 +25,7 @@ public class ProcessParams {
 		for(int i = 0; i < param.length; i++) {
 			params[i] = getParams(param[i], type[i]);
 		}
+		
 		return params;
 	}
 }

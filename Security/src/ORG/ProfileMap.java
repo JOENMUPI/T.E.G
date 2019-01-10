@@ -27,7 +27,7 @@ public class ProfileMap {
 	}
 	
 	private static Boolean checkProfile(int i) {
-		try{ profiles.get(i); return true; }
-		catch(Exception e) { return false; }
+		try{ profiles.get(i); return true; 
+		} catch(Exception e) { e.printStackTrace(); return false; }
 	}
 }

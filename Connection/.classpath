@@ -9,6 +9,6 @@
 	<classpathentry kind="lib" path="jars/tomcat-embed/tomcat-embed-logging-juli.jar"/>
 	<classpathentry kind="lib" path="jars/tomcat-embed/tomcat-embed-logging-log4j.jar"/>
 	<classpathentry kind="lib" path="jars/tomcat-embed/tomcat-embed-websocket.jar"/>
-	<classpathentry kind="lib" path="jars/JSON/json-simple-1.1.jar"/>
+	<classpathentry kind="lib" path="jars/JSON/json-20171018.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

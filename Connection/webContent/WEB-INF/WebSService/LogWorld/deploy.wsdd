@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from WebSService WSDL service -->
+
+  <service name="WebS" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://LogWorld"/>
+      <parameter name="wsdlServiceElement" value="WebSService"/>
+      <parameter name="schemaQualified" value="http://LogWorld"/>
+      <parameter name="wsdlServicePort" value="WebS"/>
+      <parameter name="className" value="LogWorld.WebS"/>
+      <parameter name="wsdlPortType" value="WebS"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://LogWorld" xmlns:retNS="http://LogWorld" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="register" qname="operNS:register" returnQName="retNS:registerReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://LogWorld" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:userName" type="tns:string"/>
+        <parameter xmlns:pns="http://LogWorld" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:pass" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://LogWorld" xmlns:retNS="http://LogWorld" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="login" qname="operNS:login" returnQName="retNS:loginReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://LogWorld" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:userName" type="tns:string"/>
+        <parameter xmlns:pns="http://LogWorld" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:pass" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://LogWorld" xmlns:retNS="http://LogWorld" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="changePass" qname="operNS:changePass" returnQName="retNS:changePassReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://LogWorld" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:userName" type="tns:string"/>
+        <parameter xmlns:pns="http://LogWorld" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:oldPass" type="tns:string"/>
+        <parameter xmlns:pns="http://LogWorld" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:newPass" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://LogWorld" xmlns:retNS="http://LogWorld" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="suma" qname="operNS:suma" returnQName="retNS:sumaReturn" returnType="rtns:int" soapAction="">
+        <parameter xmlns:pns="http://LogWorld" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:a" type="tns:int"/>
+        <parameter xmlns:pns="http://LogWorld" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:b" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://LogWorld" xmlns:retNS="http://LogWorld" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="requestData" qname="operNS:requestData" returnQName="retNS:requestDataReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://LogWorld" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:dateIni" type="tns:string"/>
+        <parameter xmlns:pns="http://LogWorld" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:dateEnd" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://LogWorld" xmlns:retNS="http://LogWorld" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="sendLog" qname="operNS:sendLog" returnQName="retNS:sendLogReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://LogWorld" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:date" type="tns:string"/>
+        <parameter xmlns:pns="http://LogWorld" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:hostComponent" type="tns:string"/>
+        <parameter xmlns:pns="http://LogWorld" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:typeComponent" type="tns:string"/>
+        <parameter xmlns:pns="http://LogWorld" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:type_msg" type="tns:string"/>
+        <parameter xmlns:pns="http://LogWorld" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:user" type="tns:string"/>
+        <parameter xmlns:pns="http://LogWorld" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:methodName" type="tns:string"/>
+        <parameter xmlns:pns="http://LogWorld" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:inf_msg" type="tns:string"/>
+      </operation>
+      <parameter name="allowedMethods" value="suma changePass login requestData sendLog register"/>
+
+  </service>
+</deployment>

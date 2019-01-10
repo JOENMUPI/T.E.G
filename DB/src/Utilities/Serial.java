@@ -16,9 +16,7 @@ public class Serial {
 			os = new ObjectOutputStream (bs);
 			os.writeObject(ds); 
 			os.close();
-		}
-		
-		catch (IOException e) { System.err.println("Error: " + e); e.printStackTrace(); }
+		} catch (IOException e) { System.err.println("Error: " + e); e.printStackTrace(); }
 		return bs.toByteArray(); 
 	}
 	
@@ -28,9 +26,7 @@ public class Serial {
 			DataSet response = (DataSet)is.readObject();
 			is.close();
 			return response;
-		}
-		
-		catch (IOException | ClassNotFoundException e) {
+		} catch (IOException | ClassNotFoundException e) {
 			System.err.println("Error: " + e); 
 			e.printStackTrace(); 
 			return null; 
@@ -44,9 +40,7 @@ public class Serial {
 			response = (Object[])is.readObject();
 			is.close();
 			return response;
-		} 
-		
-		catch (IOException | ClassNotFoundException e) {
+		} catch (IOException | ClassNotFoundException e) {
 			System.err.println("Error: " + e); 
 			e.printStackTrace(); 
 			return null; 

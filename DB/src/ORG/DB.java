@@ -16,10 +16,8 @@ public class DB {
 		try {
 			this.pstm = this.cn.prepareStatement(new PropertiesMap().getValue(props, query));
 			return new DataSet(this.pstm.executeQuery());
-		} 
-		
-		catch (SQLException e) { e.printStackTrace(); return null; } 
-		finally { this.free(); PoolManager.returnConnection(this.cn); }
+		} catch (SQLException e) { e.printStackTrace(); return null; 
+		} finally { this.free(); PoolManager.returnConnection(this.cn); }
 	}
 	
 	public DataSet query(String query, String props, Object... params) {
@@ -27,10 +25,8 @@ public class DB {
 		try {
 			this.pstm = setParams(this.cn.prepareStatement(new PropertiesMap().getValue(props, query)), params);
 			return new DataSet(this.pstm.executeQuery());
-		} 
-	
-		catch (SQLException e) { e.printStackTrace(); return null; } 
-		finally { free(); PoolManager.returnConnection(this.cn); }
+		} catch (SQLException e) { e.printStackTrace(); return null; 
+		} finally { free(); PoolManager.returnConnection(this.cn); }
 	}
 	
 	public DataSet doInsert(String query, String props, Object ...params) {
@@ -39,10 +35,8 @@ public class DB {
 			this.pstm = setParams(this.cn.prepareStatement(new PropertiesMap().getValue(props, query), PreparedStatement.RETURN_GENERATED_KEYS), params);
 			this.pstm.executeUpdate();
 			return new DataSet(this.pstm.getGeneratedKeys());
-		} 
-		
-		catch (SQLException e) { e.printStackTrace(); return null; } 
-		finally { this.free(); PoolManager.returnConnection(this.cn); }
+		} catch (SQLException e) { e.printStackTrace(); return null; 
+		} finally { this.free(); PoolManager.returnConnection(this.cn); }
 	}
 	
 	public Integer update(String query, String props, Object ...params) {
@@ -50,10 +44,8 @@ public class DB {
 			this.cn = PoolManager.getConnection();
 			this.pstm = setParams(this.cn.prepareStatement(new PropertiesMap().getValue(props, query)), params);
 			return new Integer(this.pstm.executeUpdate());
-		} 
-		
-		catch (SQLException e) { e.printStackTrace(); return null; } 
-		finally { this.free(); PoolManager.returnConnection(this.cn); }
+		} catch (SQLException e) { e.printStackTrace(); return null; 
+		} finally { this.free(); PoolManager.returnConnection(this.cn); }
 	}
 	
 	public boolean transact(String[] queries, String props, Object[][] params) {
@@ -72,16 +64,12 @@ public class DB {
 			for (PreparedStatement pstm : this.stmts) { pstm.executeUpdate(); }
 			this.cn.commit();
 			return true;
-		} 
-		
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			try { this.cn.rollback(); } 	
-			catch (SQLException e1) { e1.printStackTrace(); }
+			try { this.cn.rollback(); 
+			} catch (SQLException e1) { e1.printStackTrace(); }
 			return false;
-		} 
-		
-		finally {
+		} finally {
 			try { for (PreparedStatement pstm : this.stmts) { pstm.close(); } this.cn.setAutoCommit(true); } 
 			catch (SQLException e) { e.printStackTrace(); }
 			PoolManager.returnConnection(this.cn);
@@ -95,15 +83,11 @@ public class DB {
 			for (Object[] param : params) { this.pstm = this.setParams(this.cn.prepareStatement(new PropertiesMap().getValue(props, query)), param); this.pstm.addBatch(); }
 			this.cn.commit();
 			return this.pstm.executeBatch();
-		} 
-		
-		catch (SQLException e) {
-			try { this.cn.rollback(); } 
-			catch (SQLException e1) { e1.printStackTrace(); }
+		} catch (SQLException e) {
+			try { this.cn.rollback(); 
+			} catch (SQLException e1) { e1.printStackTrace(); }
 			return null;
-		} 
-		
-		finally { this.free(); PoolManager.returnConnection(this.cn); }
+		} finally { this.free(); PoolManager.returnConnection(this.cn); }
 	}
 	
 	private PreparedStatement setParams(PreparedStatement p, Object[] params) throws SQLException {
@@ -111,5 +95,8 @@ public class DB {
 		return p;
 	}	
 	
-	private void free() { try { pstm.close(); } catch (SQLException e) { e.printStackTrace(); } }
+	private void free() { 
+		try { pstm.close(); 
+		} catch (SQLException e) { e.printStackTrace(); } 
+	}
 }

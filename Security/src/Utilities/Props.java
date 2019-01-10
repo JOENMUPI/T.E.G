@@ -10,8 +10,6 @@ public class Props {
 			Properties prop = new Properties(System.getProperties());
 			prop.load(new FileInputStream(path + "/" + propertiesName + ".properties"));			
 			return prop;
-		} 
-		
-		catch(IOException e) { System.out.println(e.toString()); return null; }
+		} catch(IOException e) { e.printStackTrace(); return null; }
 	}
 }

@@ -1,7 +1,0 @@
-package LB;
-
-import java.util.ArrayList;
-
-public class TimeManager {
-	private ArrayList<TicketTime> tt = new ArrayList<TicketTime>();
-}

@@ -4,19 +4,18 @@ module TEGApp{
     };
      
     struct baseS{
+        string id;
         string ipResponse;
         string portResponse;
-        string sessionId;
     };
     
     struct XC{ 
-        string sessionId; 
         string typeResponse;
         sequence<octet> Response;
     };
     
     struct CS{
-        baseS infoR;
+        baseS response;
         long profile;
         string ObjectName;
         string methodName;
@@ -25,7 +24,7 @@ module TEGApp{
     };
     
     struct SP{
-        baseS infoR;
+        baseS response;
         string ObjectName;
         string methodName;
         sequence<string> params;
@@ -33,40 +32,56 @@ module TEGApp{
     };
     
     struct PB{
-        baseS infoR;
+        baseS response;
         string methodName;
         sequence<octet> params;
     };
     
     struct XD{
+        string idMsg;
         string schema;
         string queryId;
         sequence<octet> params;
     };
     
+    struct XL{
+        string host;
+        string objectName;
+        string idMsg;
+        string typeMsg;
+        string infoMsg;
+    };
+    
     interface baseI{
-        boolean test();
+        oneway void updateConnections(in byt files);
         oneway void shutdown();
-        oneway void confirmation(in string code);
+        oneway void confirmation(in baseS data, in string objectName);
     };
     
-    interface CtoS: baseI{
-        boolean senData(in CS data);
+    interface S: baseI{
+        XC senData(in CS data);
     };
     
-    interface StoP: baseI{
-        oneway void senData(in SP data);
+    interface P{
+        oneway void shutdown();
+        XC senData(in SP data);
     };
     
-    interface PtoB: baseI{
-        oneway void senData(in PB data);
+    interface B: baseI{
+        XC senData(in PB data);
     };
     
-    interface XtoD: baseI{
-      byt dataRequest(in XD data);
+    interface D{
+        oneway void shutdown();
+        byt dataRequest(in XD data);
+        oneway void sendLog(in XL data);
     };
     
-    interface XtoC: baseI{
-        oneway void sendData(in XC data);
+    interface C: baseI{
+    
+    };
+    
+    interface T{
+        byt getConnection(in string objName, in string host, in string port);
     };
 };

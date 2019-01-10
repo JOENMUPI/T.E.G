@@ -1,38 +1,42 @@
 <!DOCTYPE html>
-
-	<head>
-	  <title>Web Component</title>
-    <link href="assets/css/layout.css" rel="stylesheet" type="text/css">
-    <script src="core/requests.js"></script>
-    <script src="core/CCC.js"></script>
-    <script src="index.js"></script>
-	</head>
-	
-	<body>
-		<h1> START HTML CALLS</h1>
-		<siva-grid>
-			<siva-row>
-				<siva-form env='jungle' col='col-6'>
-					<siva-input env='jungle' placeholder='Jungle Input html'></siva-input>
-					<siva-button env='jungle'>Jungle</siva-button>
-				</siva-form>
-		
-				<siva-form env='default' col='col-6'>
-					<siva-input env='default' placeholder='default Input html'></siva-input>
-					<siva-button env='default'>Default</siva-button>
-				</siva-form>
-			</siva-row>
-		</siva-grid>
-		<siva-treeview env='jungle'>
-			<siva-treeview-row name='hola' id='lol'>
-				<siva-treeview-child>
-					<siva-treeview-row name='hola' id='xd'></siva-treeview-row>
-				</siva-treeview-child>
-			</siva-treeview-row>
-			<siva-treeview-row name='proof' id='xddd'></siva-treeview-row>
-		</siva-treeview>
-		<h1> END HTML CALLS</h1>
-		<hr>
-		<br>
-	</body>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>LogWorld</title>  
+    </head>
+    <body onload="showLogin();">
+        <script src = js\conFetch.js></script>
+        <h1 id="tittle"></h1>
+        
+        <div id="base">
+            <label for="username">Username:</label>
+            <input type="text" id="username" placeholder="Enter Username"><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" placeholder="Enter Password"><br>    
+        </div>
+        
+        <div id="login">
+            <button onclick="send('http://localhost:8080/ServletMain', 'Login')">login</button><br> 
+            Don't have An account? <button onclick="showRegister();"> REGISTER NOW!</button>
+        </div>
+      
+        <div id = "register">
+            <button onclick="send('http://localhost:8080/ServletMain', 'Register')">register</button><br>
+            You have An account? <button onclick="showLogin();"> LOGIN NOW!</button>
+        </div>
+      
+        <div id = "updatePass">
+            <label for="oldPassword">Old Password:</label>
+            <input type="password" id="oldPassword" placeholder="Enter old Password"><br>
+            <label for="newPassword">New Password:</label>
+            <input type="password" id="newPassword" placeholder="Enter new Password"><br>
+            <button onclick="send('http://localhost:8080/ServletMain', 'ChangePass')">update password</button><br> 
+            <br><button onclick="showEnter()">back</button> 
+        </div>
+        
+        <div id="enter">
+            <button onclick="showUpdate();">Change Pass</button><br> 
+            <button onclick="send('http://localhost:8080/ServletMain', 'Logout'); showLogin();">Logout</button> 
+        </div>
+    </body>
 </html>

@@ -11,7 +11,7 @@ public class EmbeddedTomcat {
 	
 	static ServletMain sm = new ServletMain();
 	
-	public static void main(String[] args) throws LifecycleException, ServletException {
+	public void init() throws LifecycleException, ServletException {
 //		Tomcat tomcat = new Tomcat();
 //		Context ctxt = null;
 //		Connector con = new Connector();

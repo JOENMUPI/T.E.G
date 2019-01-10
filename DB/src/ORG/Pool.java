@@ -79,9 +79,7 @@ public class Pool {
 					this.availableConnections.remove(0);
 					this.howManyAreOnline -= 1;
 					this.howManyAreOffline += 1;
-				} 
-				
-				catch (SQLException e) { e.printStackTrace(); }
+				} catch (SQLException e) { e.printStackTrace(); }
 			}
 		}
 	}
