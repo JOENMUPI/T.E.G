@@ -53,7 +53,7 @@ module TEGApp{
     };
     
     interface baseI{
-        oneway void updateConnections(in byt files);
+        oneway void updateConnections(in string objName, in string host, in string port);
         oneway void shutdown();
         oneway void confirmation(in baseS data, in string objectName);
     };
@@ -62,8 +62,7 @@ module TEGApp{
         XC senData(in CS data);
     };
     
-    interface P{
-        oneway void shutdown();
+    interface P: baseI{
         XC senData(in SP data);
     };
     
@@ -74,6 +73,8 @@ module TEGApp{
     interface D{
         oneway void shutdown();
         byt dataRequest(in XD data);
+        boolean dataInsert(in XD data);
+        boolean dataUpdate(in XD data);
         oneway void sendLog(in XL data);
     };
     
@@ -82,6 +83,7 @@ module TEGApp{
     };
     
     interface T{
+        oneway void shutdown();
         byt getConnection(in string objName, in string host, in string port);
     };
 };

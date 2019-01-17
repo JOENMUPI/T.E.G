@@ -7,6 +7,15 @@ public class ConnectionsMap {
 	
 	public static HashMap<String, HashMap<String, TailTime>> getConnetions(String objectName) { return conMap.get(objectName); }
 	public static TailTime getTailTime(String objectName, String host, String port) { return conMap.get(objectName).get(host).get(port); }
+	public static void setConnection(String objName, String host, String port) {
+		HashMap<String, HashMap<String, TailTime>> values = new HashMap<String, HashMap<String, TailTime>>();
+		HashMap<String, TailTime> val =  new HashMap<String, TailTime>();
+		
+		val.put(port, new TailTime());
+		values.put(host, val);
+		conMap.put(objName, values);
+	}
+	
 	public static void loadConnections(HashMap<String, HashMap<String, String>> files) {	
 		for(String objName : files.keySet()) { loadConnection(objName, files.get(objName)); }
 	}

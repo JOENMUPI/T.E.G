@@ -6,44 +6,34 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import ORG.DataSet;
-
 public class Serial {
-	public static byte[] serializeDS(DataSet ds) {
-		ByteArrayOutputStream bs= new ByteArrayOutputStream();
-		ObjectOutputStream os;
+	public static byte[] serializeElement(Object obj) {
 		try {
-			os = new ObjectOutputStream (bs);
-			os.writeObject(ds); 
-			os.close();
-		} catch (IOException e) { System.err.println("Error: " + e); e.printStackTrace(); }
-		return bs.toByteArray(); 
+			ByteArrayOutputStream bs = new ByteArrayOutputStream();
+			ObjectOutputStream os = new ObjectOutputStream (bs);
+			
+			os.writeObject(obj);
+			try { return bs.toByteArray();
+			} finally {	
+				os.close();
+				bs.close();
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
-	public static DataSet deserializeDS(byte[] b) {
+	public static Object deserializeElement(byte[] b) {
 		try {
 			ObjectInputStream is = new ObjectInputStream(new ByteArrayInputStream(b));
-			DataSet response = (DataSet)is.readObject();
+			Object res = is.readObject(); 
+			
 			is.close();
-			return response;
-		} catch (IOException | ClassNotFoundException e) {
-			System.err.println("Error: " + e); 
+			return res;
+		} catch (Exception e) {
 			e.printStackTrace(); 
 			return null; 
-		}
-	}
-	
-	public static Object[] deserializeParams(byte[] params) {
-		Object[] response = (Object[]) new Object();
-		try {
-			ObjectInputStream is = new ObjectInputStream(new ByteArrayInputStream(params));	
-			response = (Object[])is.readObject();
-			is.close();
-			return response;
-		} catch (IOException | ClassNotFoundException e) {
-			System.err.println("Error: " + e); 
-			e.printStackTrace(); 
-			return null; 
-		}
+		} 
 	}
 }

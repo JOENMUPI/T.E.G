@@ -8,14 +8,13 @@ import org.omg.CosNaming.*;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.security.SecureRandom;
+import java.util.HashMap;
 
 import org.omg.CORBA.*;
 import org.omg.PortableServer.*;
 import org.omg.PortableServer.POA;
 
 import LB.ConnectionsMap;
-import LB.LB;
 import ORG.EmbeddedTomcat;
 
 public class ServerOrb {
@@ -33,24 +32,15 @@ public class ServerOrb {
 			ncRef.rebind(path, CHelper.narrow(rootpoa.servant_to_reference(CImpl)));
 			System.out.println("ServidorOrb Connection listo y en espera");
 			orb.run();
-		} catch (Exception e) { e.printStackTrace(System.out); }
+		} catch (Exception e) { e.printStackTrace(System.out); } 
 		System.out.println("Adios, cerrando servidor Connection");
 	}
 	
-	private static void start() { // la hago variable para tener control de ella, no solo una instancia libre por ahi...
-		EmbeddedTomcat tomcat = new EmbeddedTomcat();
-		String host = "";
-		
-		try { 
-			host = InetAddress.getLocalHost().getHostAddress();
-			ConnectionsMap.loadConnections(Serial.deserializeConnections(ClientOrb.getTImpl(ORB.init(ArgsParser.serverInfo(Props.getPropertiesFile("Connections", "Traker").getProperty("host"), Props.getPropertiesFile("Connections", "Traker").getProperty("port")), null)).getConnection("Connection", host, Props.getPropertiesFile("Connections", "Product").getProperty("port")).obj));
-		} catch (UnknownHostException e1) { e1.printStackTrace(); }
-		try { 
-			tomcat.init();
-			ClientOrb.getDImpl(LB.getOrb("DB")).sendLog(new XL(host, "Connection", "" + new SecureRandom().nextLong(), "Info", "tomcat server started"));
-		} catch (Exception e) {
-			ClientOrb.getDImpl(LB.getOrb("DB")).sendLog(new XL(host, "Connection", "" + new SecureRandom().nextLong(), "Error", "tomcat server crashed"));
-			e.printStackTrace(); 
-		}	
+	@SuppressWarnings("unchecked")
+	private static void start() {
+		try {
+			new Thread(new EmbeddedTomcat()).start();
+			ConnectionsMap.loadConnections(((HashMap<String, HashMap<String, String>>)Serial.deserializeElement(ClientOrb.getTImpl(ORB.init(ArgsParser.serverInfo(Props.getPropertiesFile("Connections", "Traker").getProperty("host"), Props.getPropertiesFile("Connections", "Traker").getProperty("port")), null)).getConnection("Connection", InetAddress.getLocalHost().getHostAddress(), Props.getPropertiesFile("Connections", "Server").getProperty("port")).obj)));
+		} catch (UnknownHostException e1) { e1.printStackTrace(); }	
 	}
 }

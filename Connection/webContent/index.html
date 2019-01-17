@@ -2,41 +2,34 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>LogWorld</title>  
+        <title>MicroTest</title>  
     </head>
-    <body onload="showLogin();">
+    <body>
         <script src = js\conFetch.js></script>
-        <h1 id="tittle"></h1>
-        
-        <div id="base">
+       
+        <div id="info">
+        	<label for="fullname">Fullname:</label>
+            <input type="text" id="fullname" placeholder="Enter Fullname"><br>
             <label for="username">Username:</label>
             <input type="text" id="username" placeholder="Enter Username"><br>
             <label for="password">Password:</label>
             <input type="password" id="password" placeholder="Enter Password"><br>    
         </div>
         
-        <div id="login">
-            <button onclick="send('http://localhost:8080/ServletMain', 'Login')">login</button><br> 
-            Don't have An account? <button onclick="showRegister();"> REGISTER NOW!</button>
-        </div>
-      
-        <div id = "register">
-            <button onclick="send('http://localhost:8080/ServletMain', 'Register')">register</button><br>
-            You have An account? <button onclick="showLogin();"> LOGIN NOW!</button>
-        </div>
-      
-        <div id = "updatePass">
-            <label for="oldPassword">Old Password:</label>
-            <input type="password" id="oldPassword" placeholder="Enter old Password"><br>
-            <label for="newPassword">New Password:</label>
-            <input type="password" id="newPassword" placeholder="Enter new Password"><br>
-            <button onclick="send('http://localhost:8080/ServletMain', 'ChangePass')">update password</button><br> 
-            <br><button onclick="showEnter()">back</button> 
+        <button onclick="post('https://localhost:8443/ServletMain', 'Login')">login</button><br>
+        <button onclick="post('https://localhost:8443/ServletMain', 'Register')">register</button><br>
+        <button onclick="post('https://localhost:8443/ServletMain', 'UpdatePass')">updatePass</button><br>
+        <button onclick="get('https://localhost:8443/ServletMain', 'Logout')">logout</button><br>
+        <div>
+        	<label for="methodName">methodName:</label>
+            <input type="text" id="methodName" placeholder="Enter methodName"><br>
+            <label for="params">params:</label>
+            <input type="text" id="params" placeholder="Enter params"><br>
+            <label for="typeParams">typeParams:</label>
+            <input type="text" id="typeParams" placeholder="Enter typeParams"><br>   
+            <button onclick="basic('https://localhost:8443/ServletMain')">sendData</button><br>
         </div>
         
-        <div id="enter">
-            <button onclick="showUpdate();">Change Pass</button><br> 
-            <button onclick="send('http://localhost:8080/ServletMain', 'Logout'); showLogin();">Logout</button> 
-        </div>
+        <div id="response"></div>
     </body>
 </html>

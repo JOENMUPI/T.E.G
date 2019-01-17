@@ -12,6 +12,14 @@ public class MapManager {
 	
 	public static HashMap<String, HashMap<String, String>> getConnections(String objName, String host, String port) {
 		ConnectionasMap.setConnection(objName, host, port);
+		if(objName.equals("DataBase")) { return null; } 
 		return ConnectionasMap.getConObjs(objRelations.get(objName).split(","));	
+	}
+	
+	public static String[] relate(String objName) {
+		String s = "";
+		
+		for(Object key : objRelations.keySet()) { if(objRelations.get(key.toString()).contains(objName)) { s += key.toString() + ","; } }
+		return s.substring(0, s.length() - 1).split(",");
 	}
 }

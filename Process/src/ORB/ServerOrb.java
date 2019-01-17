@@ -8,6 +8,7 @@ import org.omg.CosNaming.*;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.HashMap;
 
 import org.omg.CORBA.*;
 import org.omg.PortableServer.*;
@@ -26,15 +27,16 @@ public class ServerOrb {
 			NamingContextExt ncRef = NamingContextExtHelper.narrow(orb.resolve_initial_references("NameService"));
 			NameComponent path[] = ncRef.to_name("P");
 			ncRef.rebind(path, PHelper.narrow(rootpoa.servant_to_reference(PImpl)));
-			System.out.println("ServidorOrb S.P listo y en espera");
+			System.out.println("ServidorOrb Process listo y en espera");
 			orb.run();
 		} catch (Exception e) { e.printStackTrace(System.out); }
 		System.out.println("Adios, cerrando servidor process");
 	}
 	
+	@SuppressWarnings("unchecked")
 	private static void start() {
 		try {
-			ConnectionsMap.loadConnections(Serial.deserializeConnections(ClientOrb.getTImpl(ORB.init(ArgsParser.serverInfo(Props.getPropertiesFile("Connections", "Traker").getProperty("host"), Props.getPropertiesFile("Connections", "Traker").getProperty("port")), null)).getConnection("Process", InetAddress.getLocalHost().getHostAddress(), Props.getPropertiesFile("Connections", "Product").getProperty("port")).obj));
+			ConnectionsMap.loadConnections((HashMap<String, HashMap<String, String>>)Serial.deserializeElement(ClientOrb.getTImpl(ORB.init(ArgsParser.serverInfo(Props.getPropertiesFile("Connections", "Traker").getProperty("host"), Props.getPropertiesFile("Connections", "Traker").getProperty("port")), null)).getConnection("Process", InetAddress.getLocalHost().getHostAddress(), Props.getPropertiesFile("Connections", "Server").getProperty("port")).obj));
 		} catch (UnknownHostException e) { e.printStackTrace(); }
 	}
 }

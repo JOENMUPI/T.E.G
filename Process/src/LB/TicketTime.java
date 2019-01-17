@@ -5,12 +5,12 @@ public class TicketTime {
 	private String code;
 	
 	public TicketTime(String id) {
-		this.captureTime(1);
+		this.captureTime(0);
 		this.code = id;
 	}
 	
 	public String getCode() { return this.code; }
-	public void finalCaptureTime() { this.captureTime(2); }
+	public void finalCaptureTime() { this.captureTime(1); }
 	private void captureTime(int i) { this.t[i] =  System.currentTimeMillis(); }
 	public long getResult(){ return t[1] - t[0]; }
 }

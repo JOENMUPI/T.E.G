@@ -12,6 +12,7 @@ import org.omg.CosNaming.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.SecureRandom;
+import java.util.HashMap;
 
 import org.omg.CORBA.*;
 import org.omg.PortableServer.*;
@@ -40,17 +41,19 @@ public class ServerOrb {
 		System.out.println("Adios, cerrando servidor Security");
 	}
 	
+	@SuppressWarnings("unchecked")
 	private static void start() {
 		try {
-			ConnectionsMap.loadConnections(Serial.deserializeConnections(ClientOrb.getTImpl(ORB.init(ArgsParser.serverInfo(Props.getPropertiesFile("Connections", "Traker").getProperty("host"), Props.getPropertiesFile("Connections", "Traker").getProperty("port")), null)).getConnection("Security", InetAddress.getLocalHost().getHostAddress(), Props.getPropertiesFile("Connections", "Product").getProperty("port")).obj));
+			ConnectionsMap.loadConnections((HashMap<String, HashMap<String, String>>)Serial.deserializeElement(ClientOrb.getTImpl(ORB.init(ArgsParser.serverInfo(Props.getPropertiesFile("Connections", "Traker").getProperty("host"), Props.getPropertiesFile("Connections", "Traker").getProperty("port")), null)).getConnection("Security", InetAddress.getLocalHost().getHostAddress(), Props.getPropertiesFile("Connections", "Server").getProperty("port")).obj));
 		} catch (UnknownHostException e) { e.printStackTrace(); }
-		DataSet ds = Serial.deserializeDS(ClientOrb.getDImpl(LB.getOrb("DB")).dataRequest(new XD("" + new SecureRandom().nextLong(), "security", "loadProfiles", null)).obj);
 		
-		loadProfiles(ds);
-		ds.first();
-		loadObjects(ds);
-		ds.first();
-		loadMethods(ds);
+//		DataSet ds = Serial.deserializeDS(ClientOrb.getDImpl(LB.getOrb("DataBase")).dataRequest(new XD("" + new SecureRandom().nextLong(), "security", "loadProfiles", null)).obj);
+//		a dormir pequeño xd
+//		loadProfiles(ds);
+//		ds.first();
+//		loadObjects(ds);
+//		ds.first();
+//		loadMethods(ds);
 	}
 	
 	private static void loadProfiles(DataSet ds) {

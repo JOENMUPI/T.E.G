@@ -2,6 +2,8 @@ package ORB;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 import org.omg.CORBA.ORB;
 
@@ -27,20 +29,53 @@ class DImpl extends DPOA {
 	public void shutdown() { this.orb.shutdown(false); }
 	public byt dataRequest(XD data) {
 		try {
-			if(data.params == null) { return new byt(Serial.serializeDS(new DB().query(data.queryId, data.schema))); 
+			if(data.params == null) { return new byt(Serial.serializeElement(new DB().query(data.queryId, data.schema))); 
 			} else { 
-				return new byt(Serial.serializeDS(new DB().query(data.queryId, data.schema, Serial.deserializeParams(data.params)))); 
+				return new byt(Serial.serializeElement(new DB().query(data.queryId, data.schema, (Object[])Serial.deserializeElement(data.params)))); 
 			}
 		} catch(Exception e) {
-			this.sendLog(new XL(this.host, this.objName, data.idMsg, "Error", "Internal Error"));
+			e.printStackTrace();
+			this.sendLog(new XL(this.host, this.objName, data.idMsg, "Error", "Internal Error, request"));
 			return null;
-		} finally {//ejemplo de retorno de confirmacion a b.o  
-			//ClientOrb.getSImpl(ORB.init(ArgsParser.serverInfo(data.response.ipResponse, data.response.portResponse), null)).confirmation(new baseS(data.response.id, this.host, Props.getPropertiesFile("Connections", "Server").getProperty("port")), this.objName);
 		} 
 	}
 	
 	public void sendLog(XL data) {
-		try { new DB().query("inserInfo", "log", data.host, data.idMsg, data.infoMsg, data.typeMsg, data.objectName);
+		try { 
+			
+			new DB().doInsert("insertInfo", "log", new Timestamp(Calendar.getInstance().getTimeInMillis()), data.host, data.idMsg, data.typeMsg, data.infoMsg, data.objectName);
 		} catch(Exception e) { e.printStackTrace(); }
+	}
+
+	public boolean dataInsert(XD data) {
+		try {
+			if(data.params == null) {  
+				new DB().query(data.queryId, data.schema);
+				return true;
+			} else { 
+				new DB().doInsert(data.queryId, data.schema, (Object[])Serial.deserializeElement(data.params));
+				return true;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			this.sendLog(new XL(this.host, this.objName, data.idMsg, "Error", "Internal Error, insert"));
+			return false;
+		} 
+	}
+
+	public boolean dataUpdate(XD data) {
+		try {
+			if(data.params == null) { 
+				new DB().update(data.queryId, data.schema);
+				return true;
+			} else { 
+				new DB().update(data.queryId, data.schema, (Object[])Serial.deserializeElement(data.params)); 
+				return true;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			this.sendLog(new XL(this.host, this.objName, data.idMsg, "Error", "Internal Error, update"));
+			return false;
+		} 
 	}
 }

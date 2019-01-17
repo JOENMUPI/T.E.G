@@ -17,7 +17,11 @@ public class ConnectionasMap {
 	public static HashMap <String, HashMap<String, String>> getConObjs(String[] objs) {
 		HashMap <String, HashMap<String, String>> aux  = new HashMap <String, HashMap<String, String>>();
 		
-		for(String obj : objs) { aux.put(obj, conMap.get(obj)); }
+		for(String obj : objs) {
+			if(conMap.get(obj) == null) { aux.put(obj, new HashMap<String,String>());
+			} else { aux.put(obj, conMap.get(obj)); }
+		}
+		
 		return aux;
 	}
 	

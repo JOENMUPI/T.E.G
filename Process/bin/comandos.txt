@@ -1,11 +1,10 @@
 Creation
 
-cd C:\Users\jose mundo\.eclipse\T.E.G\Process\src
+cd C:\Users\jose mundo\.eclipse\T.E.G\Security\src
 idlj -fall TEG.idl
 javac SrvOrb/*.java TEGApp/*.java
 
 Execution
 
-cd C:\Users\jose mundo\.eclipse\T.E.G\Process\src
-start orbd -ORBInitialPort 1050
-java SrvOrb.ServerOrb -ORBInitialPort 1050 -ORBInitialHost localhost
+cd C:\Users\jose mundo\.eclipse\T.E.G\Security\src
+java ORB.ServerOrb 

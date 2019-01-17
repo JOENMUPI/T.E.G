@@ -6,8 +6,6 @@ import Utilities.Props;
 
 import org.omg.CosNaming.*;
 
-import java.util.Properties;
-
 import org.omg.CORBA.*;
 import org.omg.PortableServer.*;
 import org.omg.PortableServer.POA;
@@ -26,10 +24,10 @@ public class ServerOrb {
 			TImpl.setORB(orb); 
 			NamingContextExt ncRef = NamingContextExtHelper.narrow(orb.resolve_initial_references("NameService"));
 			NameComponent path[] = ncRef.to_name("T");
-			ncRef.rebind(path, SHelper.narrow(rootpoa.servant_to_reference(TImpl)));
+			ncRef.rebind(path, THelper.narrow(rootpoa.servant_to_reference(TImpl)));
 			System.out.println("ServidorOrb Traker listo y en espera");
 			orb.run();
-		} catch (Exception e) { e.printStackTrace(System.out); }
+		} catch (Exception e) { e.printStackTrace(); }
 		System.out.println("Adios, cerrando servidor Traker");
 	}
 	

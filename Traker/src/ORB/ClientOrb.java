@@ -25,5 +25,8 @@ public class ClientOrb {
 		} catch (Exception e) { e.printStackTrace(System.out); return null; }
 	}
 	
-	//DII aqui para los objetos de negocios ??? tal vez
+	public static B getBImpl(ORB o) {
+		try { return BHelper.narrow(NamingContextExtHelper.narrow(o.resolve_initial_references("NameService")).resolve_str("B"));
+		} catch (Exception e) { e.printStackTrace(System.out); return null; }
+	}
 }

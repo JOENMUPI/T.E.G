@@ -7,10 +7,10 @@ import org.apache.catalina.Service;
 import org.apache.catalina.connector.Connector;
 import org.apache.catalina.startup.Tomcat;
 
-public class EmbeddedTomcat {
-	
+public class EmbeddedTomcat implements Runnable {
 	static ServletMain sm = new ServletMain();
 	
+	public void run() { try { this.init(); } catch (Exception e ) { e.printStackTrace(); } }
 	public void init() throws LifecycleException, ServletException {
 //		Tomcat tomcat = new Tomcat();
 //		Context ctxt = null;
@@ -29,7 +29,7 @@ public class EmbeddedTomcat {
 		service.addConnector(getSslConnector());
 		Context ctx = tomcat.addWebapp("/", System.getProperty("user.dir") + "\\webContent");
 		Tomcat.addServlet(ctx, "ServletMain", sm);
-		ctx.addServletMappingDecoded("/ServleMain", "ServletMain");
+		ctx.addServletMappingDecoded("/ServletMain", "ServletMain");
 		ctx.setAllowCasualMultipartParsing(true);
 		tomcat.start();
 		tomcat.getServer().await();
